@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webcam Detector</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Demo local · Hugging Face · Webcam</p>
+          <h1>Detección de objetos ligera en tiempo real</h1>
+          <p class="lede">
+            Abre la webcam, carga un modelo pequeño en el navegador y muestra
+            las detecciones sobre la imagen sin backend de inferencia.
+          </p>
+        </div>
+
+        <div class="control-grid">
+          <button id="start-button" class="primary-button">Iniciar cámara</button>
+          <button id="stop-button" class="secondary-button" disabled>
+            Detener
+          </button>
+
+          <label class="control-label" for="camera-select">Cámara</label>
+          <select id="camera-select" class="control-input" disabled>
+            <option value="">Buscando cámaras...</option>
+          </select>
+
+          <label class="control-label" for="threshold-input">
+            Umbral de confianza
+          </label>
+          <input
+            id="threshold-input"
+            class="control-input"
+            type="range"
+            min="20"
+            max="90"
+            step="5"
+            value="45"
+          />
+
+          <output id="threshold-output" class="threshold-output">0.45</output>
+        </div>
+
+        <div class="status-panel">
+          <p id="status-line" class="status-line">Listo para cargar el modelo.</p>
+          <dl class="meta-grid">
+            <div>
+              <dt>Modelo</dt>
+              <dd id="model-name">onnx-community/rfdetr_nano-ONNX</dd>
+            </div>
+            <div>
+              <dt>Backend</dt>
+              <dd id="backend-name">Pendiente</dd>
+            </div>
+            <div>
+              <dt>Estado</dt>
+              <dd id="runtime-state">Esperando inicio</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="viewer-card">
+        <div class="viewer-stage">
+          <video
+            id="webcam-video"
+            class="webcam-video"
+            autoplay
+            muted
+            playsinline
+          ></video>
+          <canvas id="overlay-canvas" class="overlay-canvas"></canvas>
+          <div id="empty-state" class="empty-state">
+            <p>La webcam aparecerá aquí.</p>
+            <p class="empty-subtitle">
+              El modelo está alojado localmente en la página, por lo que cargará rápido
+              y todo el proceso es privado.
+            </p>
+          </div>
+        </div>
+
+        <div class="hint-strip">
+          <span>Consejo: buena luz y objetos cotidianos mejoran el resultado.</span>
+          <span>Frecuencia de inferencia: ~2 FPS para mantener la demo fluida.</span>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
