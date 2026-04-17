@@ -47,6 +47,7 @@ const inferenceCanvas = document.createElement("canvas");
 
 // Variables de estado de la aplicación
 let detector = null; // Guardará la tubería del modelo
+let detectorPromise = null; // Evita cargas duplicadas del mismo modelo
 let detectorBackend = "wasm"; // Usará WebAssembly o WebGPU
 let mediaStream = null; // Stream actual de la cámara
 let inferLoopTimer = null; // Temporizador del bucle de inferencia
@@ -61,6 +62,9 @@ let lastCaptureHeight = 1;
 modelName.textContent = MODEL_ID;
 thresholdOutput.value = currentThreshold.toFixed(2);
 thresholdOutput.textContent = currentThreshold.toFixed(2);
+startButton.disabled = true;
+
+void initApp();
 
 // ==========================================
 // EVENTOS DE LA INTERFAZ
@@ -134,6 +138,7 @@ window.addEventListener("resize", () => {
  */
 async function ensureDetector() {
   if (detector) return detector;
+  if (detectorPromise) return detectorPromise;
 
   statusLine.textContent = "Cargando modelo de detección...";
   runtimeState.textContent = "Inicializando";
@@ -142,31 +147,57 @@ async function ensureDetector() {
   detectorBackend = "webgpu" in navigator ? "webgpu" : "wasm";
   backendName.textContent = detectorBackend.toUpperCase();
 
-  try {
-    // Inicializar Pipeline usando la librería Transformers.js
-    detector = await pipeline("object-detection", MODEL_ID, {
-      device: detectorBackend,
-      dtype: detectorBackend === "webgpu" ? "fp16" : "q8",
-    });
-  } catch (error) {
-    // Mecanismo de emergencia "Fallback": Si WebGPU falla, vuelve a intentarlo bajando a CPU (WASM)
-    if (detectorBackend !== "wasm") {
-      detectorBackend = "wasm";
-      backendName.textContent = "WASM";
-      statusLine.textContent = "WebGPU no estuvo disponible; cambiando a WASM...";
-
+  detectorPromise = (async () => {
+    try {
+      // Inicializar Pipeline usando la librería Transformers.js
       detector = await pipeline("object-detection", MODEL_ID, {
-        device: "wasm",
-        dtype: "q8",
+        device: detectorBackend,
+        dtype: detectorBackend === "webgpu" ? "fp16" : "q8",
       });
-    } else {
-      throw error;
-    }
-  }
+    } catch (error) {
+      // Mecanismo de emergencia "Fallback": Si WebGPU falla, vuelve a intentarlo bajando a CPU (WASM)
+      if (detectorBackend !== "wasm") {
+        detectorBackend = "wasm";
+        backendName.textContent = "WASM";
+        statusLine.textContent = "WebGPU no estuvo disponible; cambiando a WASM...";
 
-  statusLine.textContent = "Modelo cargado. Listo para abrir la cámara.";
-  runtimeState.textContent = "Modelo listo";
-  return detector;
+        detector = await pipeline("object-detection", MODEL_ID, {
+          device: "wasm",
+          dtype: "q8",
+        });
+      } else {
+        throw error;
+      }
+    }
+
+    statusLine.textContent = "Modelo cargado. Listo para abrir la cámara.";
+    runtimeState.textContent = "Modelo listo";
+    return detector;
+  })();
+
+  try {
+    return await detectorPromise;
+  } catch (error) {
+    detectorPromise = null;
+    backendName.textContent = "Error";
+    throw error;
+  }
+}
+
+async function initApp() {
+  statusLine.textContent = "Comprobando y cargando modelo local...";
+  runtimeState.textContent = "Preparando";
+  backendName.textContent = "Comprobando";
+
+  try {
+    await ensureDetector();
+    startButton.disabled = false;
+  } catch (error) {
+    console.error(error);
+    statusLine.textContent = "No se pudo cargar el modelo local. Revisa los archivos en ./models/.";
+    runtimeState.textContent = "Error de modelo";
+    startButton.disabled = false;
+  }
 }
 
 /**

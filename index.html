@@ -3,83 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IES San Andrés · Detector con Webcam</title>
+    <title>Detector con Webcam</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main class="app-shell">
       <section class="hero-card">
-        <div class="brand-panel">
-          <div class="brand-lockup">
-            <img
-              src="./img/logo.png"
-              alt="IES San Andrés"
-              class="brand-logo"
+        <div class="hero-main">
+          <div class="brand-panel">
+            <div class="brand-lockup">
+              <img
+                src="./img/logo.png"
+                alt="IES San Andrés"
+                class="brand-logo"
+              />
+              <p class="eyebrow">Demo local · IA aplicada · Visión artificial</p>
+            </div>
+
+            <div class="hero-copy">
+              <h1>Detección de objetos en tiempo real para el aula</h1>
+              <p class="lede">
+                Activa la webcam, carga el detector desde el navegador y visualiza
+                resultados al instante con una experiencia local, privada y lista
+                para demostraciones docentes.
+              </p>
+            </div>
+          </div>
+
+          <div class="control-grid">
+            <button id="start-button" class="primary-button" disabled>Iniciar cámara</button>
+            <button id="stop-button" class="secondary-button" disabled>
+              Detener
+            </button>
+
+            <label class="control-label" for="camera-select">Cámara</label>
+            <select id="camera-select" class="control-input" disabled>
+              <option value="">Buscando cámaras...</option>
+            </select>
+
+            <label class="control-label" for="threshold-input">
+              Umbral de confianza
+            </label>
+            <input
+              id="threshold-input"
+              class="control-input"
+              type="range"
+              min="20"
+              max="90"
+              step="5"
+              value="45"
             />
-            <p class="eyebrow">Demo local · IA aplicada · Visión artificial</p>
-          </div>
 
-          <div class="hero-copy">
-            <h1>Detección de objetos en tiempo real para el aula</h1>
-            <p class="lede">
-              Activa la webcam, carga el detector desde el navegador y visualiza
-              resultados al instante con una experiencia local, privada y lista
-              para demostraciones docentes.
-            </p>
+            <output id="threshold-output" class="threshold-output">0.45</output>
           </div>
+        </div>
 
+        <div class="hero-footer">
           <div class="brand-note">
             <p class="note-kicker">Entorno autoalojado</p>
             <p>
-              El modelo se sirve desde esta misma página para trabajar sin
-              backend de inferencia y con control total sobre los recursos.
+              El modelo se sirve desde esta misma página para trabajar sin backend
+              de inferencia y con control total sobre los recursos.
             </p>
           </div>
-        </div>
 
-        <div class="control-grid">
-          <button id="start-button" class="primary-button">Iniciar cámara</button>
-          <button id="stop-button" class="secondary-button" disabled>
-            Detener
-          </button>
-
-          <label class="control-label" for="camera-select">Cámara</label>
-          <select id="camera-select" class="control-input" disabled>
-            <option value="">Buscando cámaras...</option>
-          </select>
-
-          <label class="control-label" for="threshold-input">
-            Umbral de confianza
-          </label>
-          <input
-            id="threshold-input"
-            class="control-input"
-            type="range"
-            min="20"
-            max="90"
-            step="5"
-            value="45"
-          />
-
-          <output id="threshold-output" class="threshold-output">0.45</output>
-        </div>
-
-        <div class="status-panel">
-          <p id="status-line" class="status-line">Listo para cargar el modelo.</p>
-          <dl class="meta-grid">
-            <div>
-              <dt>Modelo</dt>
-              <dd id="model-name">onnx-community/rfdetr_nano-ONNX</dd>
-            </div>
-            <div>
-              <dt>Backend</dt>
-              <dd id="backend-name">Pendiente</dd>
-            </div>
-            <div>
-              <dt>Estado</dt>
-              <dd id="runtime-state">Esperando inicio</dd>
-            </div>
-          </dl>
+          <div class="status-panel">
+            <p id="status-line" class="status-line">Comprobando modelo local...</p>
+            <dl class="meta-grid">
+              <div>
+                <dt>Modelo</dt>
+                <dd id="model-name">onnx-community/rfdetr_nano-ONNX</dd>
+              </div>
+              <div>
+                <dt>Backend</dt>
+                <dd id="backend-name">Comprobando</dd>
+              </div>
+              <div>
+                <dt>Estado</dt>
+                <dd id="runtime-state">Preparando</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </section>
 

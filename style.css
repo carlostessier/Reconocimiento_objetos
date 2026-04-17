@@ -52,17 +52,20 @@ img {
 
 .app-shell {
   position: relative;
-  width: min(1180px, calc(100vw - 32px));
-  margin: 24px auto 32px;
+  width: min(1380px, calc(100vw - 28px));
+  min-height: calc(100vh - 28px);
+  margin: 14px auto;
   display: grid;
-  gap: 20px;
+  grid-template-columns: minmax(360px, 430px) minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
 }
 
 .hero-card,
 .viewer-card {
   position: relative;
   border: 1px solid var(--line);
-  border-radius: 30px;
+  border-radius: 26px;
   background: var(--surface);
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
@@ -70,23 +73,28 @@ img {
 }
 
 .hero-card {
-  padding: 28px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.88fr);
-  gap: 24px;
+  position: sticky;
+  top: 14px;
+  min-height: calc(100vh - 28px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .hero-card::after {
   content: "";
   position: absolute;
-  inset: auto -10% -36% 42%;
-  height: 280px;
-  background: radial-gradient(circle, rgba(238, 131, 25, 0.22), transparent 62%);
+  inset: auto -25% -40% 25%;
+  height: 180px;
+  background: radial-gradient(circle, rgba(238, 131, 25, 0.14), transparent 62%);
   pointer-events: none;
 }
 
+.hero-main,
 .brand-panel,
 .control-grid,
+.hero-footer,
 .status-panel,
 .viewer-header,
 .viewer-stage,
@@ -95,22 +103,28 @@ img {
   z-index: 1;
 }
 
+.hero-main {
+  display: grid;
+  gap: 12px;
+}
+
 .brand-panel {
   display: grid;
   align-content: start;
-  gap: 22px;
+  gap: 8px;
   min-width: 0;
 }
 
 .brand-lockup {
   display: grid;
-  gap: 18px;
-  justify-items: start;
+  gap: 8px;
+  justify-items: center;
 }
 
 .brand-logo {
-  width: min(100%, 360px);
+  width: min(100%, 190px);
   height: auto;
+  margin-inline: auto;
 }
 
 .eyebrow,
@@ -126,6 +140,10 @@ img {
 .eyebrow,
 .section-kicker {
   color: var(--brand-teal-deep);
+}
+
+.eyebrow {
+  text-align: center;
 }
 
 .note-kicker {
@@ -144,9 +162,9 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(2.3rem, 5.8vw, 4.6rem);
-  line-height: 0.94;
-  max-width: 11ch;
+  font-size: clamp(1.9rem, 2.7vw, 2.8rem);
+  line-height: 0.96;
+  max-width: 12ch;
 }
 
 h2 {
@@ -163,32 +181,40 @@ h2 {
 }
 
 .lede {
-  margin: 18px 0 0;
-  max-width: 56ch;
-  font-size: 1.04rem;
-  line-height: 1.65;
+  margin: 4px 0 0;
+  max-width: 34ch;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.hero-footer {
+  margin-top: auto;
+  display: grid;
+  gap: 8px;
+  padding-top: 18px;
 }
 
 .brand-note {
-  max-width: 420px;
-  padding: 18px 20px;
-  border-radius: 22px;
+  max-width: 100%;
+  padding: 9px 11px;
+  border-radius: 15px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 246, 237, 0.92));
   border: 1px solid rgba(238, 131, 25, 0.18);
 }
 
 .brand-note p:last-child {
-  margin: 10px 0 0;
-  line-height: 1.58;
+  margin: 5px 0 0;
+  line-height: 1.38;
+  font-size: 0.88rem;
 }
 
 .control-grid {
   align-self: start;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 14px;
-  padding: 22px;
-  border-radius: 26px;
+  gap: 8px 9px;
+  padding: 13px;
+  border-radius: 18px;
   background: linear-gradient(180deg, rgba(19, 45, 77, 0.98), rgba(24, 64, 102, 0.96));
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: white;
@@ -197,8 +223,8 @@ h2 {
 .primary-button,
 .secondary-button,
 .control-input {
-  min-height: 50px;
-  border-radius: 15px;
+  min-height: 42px;
+  border-radius: 12px;
   border: 1px solid transparent;
   font: inherit;
 }
@@ -242,7 +268,7 @@ h2 {
 .control-label {
   align-self: end;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.84rem;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
@@ -262,15 +288,15 @@ h2 {
 }
 
 .status-panel {
-  grid-column: 1 / -1;
-  padding: 18px 20px;
-  border-radius: 24px;
+  margin-top: 0;
+  padding: 11px 12px;
+  border-radius: 15px;
   background: linear-gradient(135deg, rgba(33, 159, 143, 0.14), rgba(255, 255, 255, 0.82));
   border: 1px solid rgba(33, 159, 143, 0.18);
 }
 
 .status-line {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-weight: 700;
   color: var(--brand-blue);
 }
@@ -278,8 +304,8 @@ h2 {
 .meta-grid {
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 .meta-grid dt {
@@ -296,7 +322,11 @@ h2 {
 }
 
 .viewer-card {
-  padding: 24px;
+  min-height: calc(100vh - 28px);
+  padding: 16px 18px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(241, 246, 248, 0.88));
 }
@@ -305,21 +335,23 @@ h2 {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 0;
 }
 
 .viewer-copy {
   margin: 0;
-  max-width: 42ch;
-  line-height: 1.55;
+  max-width: 34ch;
+  font-size: 0.92rem;
+  line-height: 1.4;
 }
 
 .viewer-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 24px;
+  min-height: min(68vh, 720px);
+  height: 100%;
+  border-radius: 20px;
   overflow: hidden;
   background:
     radial-gradient(circle at top, rgba(33, 159, 143, 0.16), transparent 32%),
@@ -342,10 +374,10 @@ h2 {
 
 .empty-state {
   position: absolute;
-  inset: auto 18px 18px;
-  max-width: 380px;
-  padding: 16px 18px;
-  border-radius: 18px;
+  inset: auto 14px 14px;
+  max-width: 320px;
+  padding: 14px 16px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.5);
   color: var(--brand-blue);
@@ -365,9 +397,9 @@ h2 {
 .hint-strip {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px 2px 2px;
-  font-size: 0.92rem;
+  gap: 12px;
+  padding: 0 2px 2px;
+  font-size: 0.85rem;
 }
 
 .detection-pill {
@@ -384,17 +416,49 @@ h2 {
   white-space: nowrap;
 }
 
-@media (max-width: 980px) {
-  .hero-card {
+@media (max-width: 1100px) {
+  .app-shell {
+    width: min(100vw - 20px, 100%);
+    min-height: auto;
+    margin: 10px auto 18px;
     grid-template-columns: 1fr;
   }
 
+  .hero-card,
+  .viewer-card {
+    position: relative;
+    top: auto;
+    min-height: auto;
+  }
+
+  .hero-main {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.88fr);
+    gap: 12px;
+  }
+
+  .hero-card {
+    padding: 16px;
+  }
+
+  .hero-footer {
+    margin-top: 0;
+    padding-top: 6px;
+  }
+
+  .brand-logo {
+    width: min(100%, 170px);
+  }
+
   .brand-panel {
-    gap: 18px;
+    gap: 10px;
   }
 
   h1 {
-    max-width: 12ch;
+    max-width: 14ch;
+  }
+
+  .meta-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .viewer-header {
@@ -405,36 +469,84 @@ h2 {
   .viewer-copy {
     max-width: 56ch;
   }
+
+  .viewer-stage {
+    min-height: 52vw;
+  }
 }
 
 @media (max-width: 720px) {
   .app-shell {
-    width: min(100vw - 20px, 100%);
-    margin: 10px auto 24px;
+    width: min(100vw - 14px, 100%);
+    margin: 6px auto 14px;
+    gap: 10px;
   }
 
   .hero-card,
   .viewer-card {
-    border-radius: 24px;
-    padding: 18px;
+    border-radius: 20px;
+    padding: 14px;
+  }
+
+  .hero-main {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hero-card {
+    gap: 10px;
+  }
+
+  .brand-panel {
+    gap: 8px;
+  }
+
+  .brand-note,
+  .viewer-copy,
+  .hint-strip,
+  .eyebrow {
+    display: none;
+  }
+
+  .brand-logo {
+    width: min(100%, 150px);
+  }
+
+  .eyebrow {
+    text-align: left;
   }
 
   .control-grid {
     grid-template-columns: 1fr;
-    padding: 18px;
+    padding: 12px;
   }
 
   .meta-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
-  .hint-strip {
-    flex-direction: column;
+  .meta-grid dt {
+    font-size: 0.68rem;
+  }
+
+  .meta-grid dd {
+    font-size: 0.86rem;
+  }
+
+  .viewer-card {
+    gap: 10px;
+  }
+
+  .viewer-stage {
+    min-height: 58vw;
+    border-radius: 16px;
   }
 
   .empty-state {
     max-width: none;
-    inset: auto 14px 14px;
+    inset: auto 10px 10px;
+    padding: 12px;
   }
 }
 
@@ -446,51 +558,47 @@ h2 {
   }
 
   .app-shell {
-    width: min(100vw - 12px, 100%);
-    gap: 14px;
-  }
-
-  .hero-card,
-  .viewer-card {
-    padding: 14px;
-    border-radius: 20px;
+    width: min(100vw - 10px, 100%);
+    gap: 8px;
   }
 
   .brand-logo {
-    width: min(100%, 260px);
+    width: min(100%, 132px);
+  }
+
+  .eyebrow {
+    text-align: left;
   }
 
   h1 {
-    font-size: clamp(2rem, 10vw, 2.8rem);
+    font-size: 1.45rem;
     max-width: none;
   }
 
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
   }
 
-  .lede,
-  .viewer-copy,
-  .brand-note p:last-child {
-    font-size: 0.97rem;
-  }
-
-  .control-grid {
-    gap: 10px;
+  .lede {
+    display: none;
   }
 
   .primary-button,
   .secondary-button,
   .control-input {
-    min-height: 46px;
+    min-height: 44px;
   }
 
   .viewer-stage {
-    aspect-ratio: 4 / 3;
-    border-radius: 18px;
+    min-height: 62vw;
+    border-radius: 14px;
   }
 
   .empty-state {
-    padding: 14px;
+    padding: 10px 12px;
+  }
+
+  .empty-subtitle {
+    font-size: 0.84rem;
   }
 }
