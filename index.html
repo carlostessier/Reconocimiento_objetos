@@ -3,19 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Webcam Detector</title>
+    <title>IES San Andrés · Detector con Webcam</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main class="app-shell">
       <section class="hero-card">
-        <div class="hero-copy">
-          <p class="eyebrow">Demo local · Hugging Face · Webcam</p>
-          <h1>Detección de objetos ligera en tiempo real</h1>
-          <p class="lede">
-            Abre la webcam, carga un modelo pequeño en el navegador y muestra
-            las detecciones sobre la imagen sin backend de inferencia.
-          </p>
+        <div class="brand-panel">
+          <div class="brand-lockup">
+            <img
+              src="./img/logo.png"
+              alt="IES San Andrés"
+              class="brand-logo"
+            />
+            <p class="eyebrow">Demo local · IA aplicada · Visión artificial</p>
+          </div>
+
+          <div class="hero-copy">
+            <h1>Detección de objetos en tiempo real para el aula</h1>
+            <p class="lede">
+              Activa la webcam, carga el detector desde el navegador y visualiza
+              resultados al instante con una experiencia local, privada y lista
+              para demostraciones docentes.
+            </p>
+          </div>
+
+          <div class="brand-note">
+            <p class="note-kicker">Entorno autoalojado</p>
+            <p>
+              El modelo se sirve desde esta misma página para trabajar sin
+              backend de inferencia y con control total sobre los recursos.
+            </p>
+          </div>
         </div>
 
         <div class="control-grid">
@@ -65,6 +84,17 @@
       </section>
 
       <section class="viewer-card">
+        <div class="viewer-header">
+          <div>
+            <p class="section-kicker">Visualización</p>
+            <h2>Escena analizada en directo</h2>
+          </div>
+          <p class="viewer-copy">
+            El sistema dibuja las detecciones sobre la imagen en tiempo real y
+            mantiene el procesamiento en el dispositivo.
+          </p>
+        </div>
+
         <div class="viewer-stage">
           <video
             id="webcam-video"
